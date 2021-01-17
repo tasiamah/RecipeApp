@@ -9,18 +9,25 @@ import {Subject} from 'rxjs';
 })
 export class RecipeService {
   recipesChanged = new Subject<Recipe[]>();
-  private recipes: Recipe[] = [
-    new Recipe('Test Recipe', 'Description for test recipe',
-      'https://www.davidlebovitz.com/wp-content/uploads/2005/11/Persimmon-bread-pudding-recipe-james-beard_-4-640x889.jpg',
-      [
-        new Ingredient('Meat', 1),
-        new Ingredient('French Fries', 1)
-      ]
-      )
-  ];
+  // private recipes: Recipe[] = [
+  //   new Recipe('Test Recipe', 'Description for test recipe',
+  //     'https://www.davidlebovitz.com/wp-content/uploads/2005/11/Persimmon-bread-pudding-recipe-james-beard_-4-640x889.jpg',
+  //     [
+  //       new Ingredient('Meat', 1),
+  //       new Ingredient('French Fries', 1)
+  //     ]
+  //     )
+  // ];
+  private recipes: Recipe[] = [];
+
   constructor(private shoppingListService: ShoppingListService) { }
   getRecipes(): Recipe[] {
     return this.recipes.slice();
+  }
+
+  setRecipes(recipes: Recipe[]) {
+    this.recipes = recipes;
+    this.recipesChanged.next(this.recipes.slice());
   }
 
   getRecipe(index: number) {
