@@ -51,4 +51,8 @@ export class AthComponent implements OnInit {
 
     form.reset();
   }
+
+  onCloseError() {
+    this.error = null;
+  }
 }
