@@ -8,11 +8,12 @@ import {RecipeEditComponent} from './recipes/recipe-edit/recipe-edit.component';
 import {RecipeResolverService} from './recipes/recipe-resolver.service';
 import {AthComponent} from './ath/ath.component';
 import {LoadingSpinnerComponent} from './shared/loading-spinner/loading-spinner.component';
+import {AuthGuard} from './ath/auth.guard';
 
 const appRoutes: Routes = [
   {path: '', redirectTo: '/recipes', pathMatch: 'full'},
   {path: 'shopping-list', component: ShoppingListComponent, children: []},
-  {path: 'recipes', component: RecipesComponent, children: [
+  {path: 'recipes', component: RecipesComponent, canActivate: [AuthGuard], children: [
       {path: '', component: RecipeStartComponent},
       {path: 'new', component: RecipeEditComponent},
       {path: ':id', component: RecipeDetailComponent , resolve: [RecipeResolverService]},
