@@ -6,6 +6,8 @@ import {RecipeStartComponent} from './recipes/recipe-start/recipe-start.componen
 import {RecipeDetailComponent} from './recipes/recipe-detail/recipe-detail.component';
 import {RecipeEditComponent} from './recipes/recipe-edit/recipe-edit.component';
 import {RecipeResolverService} from './recipes/recipe-resolver.service';
+import {AthComponent} from './ath/ath.component';
+import {LoadingSpinnerComponent} from './shared/loading-spinner/loading-spinner.component';
 
 const appRoutes: Routes = [
   {path: '', redirectTo: '/recipes', pathMatch: 'full'},
@@ -15,7 +17,9 @@ const appRoutes: Routes = [
       {path: 'new', component: RecipeEditComponent},
       {path: ':id', component: RecipeDetailComponent , resolve: [RecipeResolverService]},
       {path: ':id/edit', component: RecipeEditComponent , resolve: [RecipeResolverService]},
-    ]}
+    ]},
+  {path: 'auth', component: AthComponent},
+  {path: 'spinner', component: LoadingSpinnerComponent}
 ];
 
 @NgModule({
