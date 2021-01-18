@@ -9,19 +9,20 @@ import {RecipeResolverService} from './recipe-resolver.service';
 import {CommonModule} from '@angular/common';
 
 
+
 const routes: Routes = [
-  {path: 'recipes', component: RecipesComponent, canActivate: [AuthGuard], children: [
+  {path: '', component: RecipesComponent, canActivate: [AuthGuard], children: [
       {path: '', component: RecipeStartComponent},
       {path: 'new', component: RecipeEditComponent},
       {path: ':id', component: RecipeDetailComponent , resolve: [RecipeResolverService]},
       {path: ':id/edit', component: RecipeEditComponent , resolve: [RecipeResolverService]},
     ]},
 ];
+// @ts-ignore
 @NgModule({
   exports: [RouterModule],
-  imports: [
-    CommonModule,
-    RouterModule.forChild(routes)
-  ]
+  imports: [CommonModule, RouterModule.forChild(routes)]
 })
+
+
 export class RecipesRoutingModule { }
