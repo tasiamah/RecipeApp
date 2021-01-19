@@ -9,6 +9,8 @@ import {ShoppingListModule} from './shopping-list/shopping-list.module';
 import {SharedModule} from './shared/shared.module';
 import {CoreModule} from "./core.module";
 import {AuthModule} from "./ath/auth.module";
+import {StoreModule} from "@ngrx/store";
+import {ShoppingListReducer} from "./shopping-list/store/shopping-list.reducer";
 
 @NgModule({
   declarations: [
@@ -21,6 +23,7 @@ import {AuthModule} from "./ath/auth.module";
     HttpClientModule,
     ShoppingListModule,
     SharedModule,
+    StoreModule.forRoot({shoppingList: ShoppingListReducer}),
     CoreModule,
     AuthModule
   ],
