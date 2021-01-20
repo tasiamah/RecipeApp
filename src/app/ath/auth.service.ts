@@ -5,6 +5,10 @@ import {BehaviorSubject, Subject, throwError} from 'rxjs';
 import {User} from './user.model';
 import {Router} from '@angular/router';
 import { environment } from '../../environments/environment';
+import {Store} from "@ngrx/store";
+import * as fromApp from '../store/app.reducer';
+import * as AuthActions from '../ath/store/auth.actions';
+import {authReducer} from "./store/auth.reducer";
 
 export interface AuthResponseData {
   kind: string;
@@ -20,11 +24,12 @@ export interface AuthResponseData {
   providedIn: 'root'
 })
 export class AuthService {
-  user = new BehaviorSubject<User>(null);
+  // user = new BehaviorSubject<User>(null);
   private tokenExpirationTimer: any;
 
   constructor(private  http: HttpClient,
-              private router: Router) { }
+              private router: Router,
+              private store: Store<fromApp.AppState>) { }
 
   singup(email: string, password: string) {
     return this.http.post<AuthResponseData>(
@@ -62,15 +67,17 @@ export class AuthService {
       return ;
     }
     const loadUser = new User(userData.email, userData.id, userData._token, new Date(userData._tokenExpirationDate));
+
     if (loadUser.token) {
-      this.user.next(loadUser);
+      this.store.dispatch(new AuthActions.Login(
+        {email: loadUser.email, userId: loadUser.id, token: loadUser.token, expirationDate: new Date(userData._tokenExpirationDate)}));
       const expirationDuration = new Date(userData._tokenExpirationDate).getTime() - new Date().getTime();
       this.autoLogout(expirationDuration);
     }
   }
 
   logout() {
-    this.user.next(null);
+    this.store.dispatch(new AuthActions.Logout());
     this.router.navigate(['/auth']);
     localStorage.removeItem('userData')
     if (this.tokenExpirationTimer) {
@@ -93,13 +100,18 @@ export class AuthService {
       idToken,
       expirationData
     );
-    this.user.next(user);
+    this.store.dispatch(new AuthActions.Login({
+      email: email,
+      userId: userId,
+      token: idToken,
+      expirationDate: expirationData
+    }));
     this.autoLogout(expiresIn * 1000);
     localStorage.setItem('userData', JSON.stringify(user));
   }
 
   private handeError(errorRes: HttpErrorResponse) {
-    let errorMessage = 'An unkown error occured!';
+    let errorMessage = 'An unknown error occurred!';
     if (!errorRes.error || !errorRes.error.error) {
       return throwError(errorMessage);
     }

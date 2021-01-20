@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {AuthResponseData, AuthService} from './auth.service';
 import {Observable} from 'rxjs';
-import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
+import {Store} from '@ngrx/store';
+import * as fromApp from '../store/app.reducer';
+import * as AuthActions from '../ath/store/auth.actions';
 
 @Component({
   selector: 'app-ath',
@@ -16,7 +18,8 @@ export class AthComponent implements OnInit {
   error: string = null;
 
   constructor(private authService: AuthService,
-              private router: Router) { }
+              private router: Router,
+              private store: Store<fromApp.AppState>) { }
 
   ngOnInit(): void {
   }
@@ -33,7 +36,7 @@ export class AthComponent implements OnInit {
     let authObs = new Observable<AuthResponseData>();
 
     if (this.isLoginMode) {
-      authObs = this.authService.login(email, password);
+      this.store.dispatch(new AuthActions.LoginStart({email: email, password: password}));
     } else {
       authObs = this.authService.singup(email, password);
     }
