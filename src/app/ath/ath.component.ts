@@ -22,6 +22,10 @@ export class AthComponent implements OnInit {
               private store: Store<fromApp.AppState>) { }
 
   ngOnInit(): void {
+    this.store.select('auth').subscribe(authState => {
+      this.isLoading = authState.loading;
+      this.error = authState.authError;
+    });
   }
 
   onSwitchMode() {
@@ -40,16 +44,15 @@ export class AthComponent implements OnInit {
     } else {
       authObs = this.authService.singup(email, password);
     }
-
-    authObs.subscribe(resData => {
-        this.isLoading = false;
-        this.router.navigate(['/recipes']);
-      },
-      errorRes => {
-        console.log(errorRes);
-        this.error = errorRes;
-        this.isLoading = false;
-      });
+    // authObs.subscribe(resData => {
+    //     this.isLoading = false;
+    //     this.router.navigate(['/recipes']);
+    //   },
+    //   errorRes => {
+    //     console.log(errorRes);
+    //     this.error = errorRes;
+    //     this.isLoading = false;
+    //   });
 
     form.reset();
   }
