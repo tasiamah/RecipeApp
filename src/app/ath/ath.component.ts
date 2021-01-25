@@ -36,23 +36,12 @@ export class AthComponent implements OnInit {
     const email = form.value.email;
     const password = form.value.password;
 
-    this.isLoading = true;
-    let authObs = new Observable<AuthResponseData>();
 
     if (this.isLoginMode) {
       this.store.dispatch(new AuthActions.LoginStart({email: email, password: password}));
     } else {
-      authObs = this.authService.singup(email, password);
+      this.store.dispatch(new AuthActions.SignUpStart({email: email, password: password}));
     }
-    // authObs.subscribe(resData => {
-    //     this.isLoading = false;
-    //     this.router.navigate(['/recipes']);
-    //   },
-    //   errorRes => {
-    //     console.log(errorRes);
-    //     this.error = errorRes;
-    //     this.isLoading = false;
-    //   });
 
     form.reset();
   }
