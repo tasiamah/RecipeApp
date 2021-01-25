@@ -1,4 +1,4 @@
-import {Action} from "@ngrx/store";
+import {Action} from '@ngrx/store';
 
 export const AUTHENTICATE_SUCCESS = '[Auth] AUTHENTICATE SUCCESS';
 export const LOGOUT = '[Auth] LOGOUT';

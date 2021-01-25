@@ -1,11 +1,10 @@
 import {User} from "../user.model";
 import * as AuthActions from "./auth.actions";
-import {AUTHENTICATE_SUCCESS, AUTHENTICATE_FAIL, LOGIN_START} from "./auth.actions";
 
 export interface State {
   user: User;
   authError: string;
-  loading: boolean
+  loading: boolean;
 }
 
 const initialState: State = {
