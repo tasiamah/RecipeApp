@@ -1,27 +1,31 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {AuthService} from './auth.service';
 import {Router} from '@angular/router';
 import {Store} from '@ngrx/store';
 import * as fromApp from '../store/app.reducer';
 import * as AuthActions from '../ath/store/auth.actions';
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-ath',
   templateUrl: './ath.component.html',
   styleUrls: ['./ath.component.css']
 })
-export class AthComponent implements OnInit {
+export class AthComponent implements OnInit, OnDestroy {
   isLoginMode = true;
   isLoading = false;
   error: string = null;
+
+  private closeSub: Subscription;
+  private storeSub: Subscription;
 
   constructor(private authService: AuthService,
               private router: Router,
               private store: Store<fromApp.AppState>) { }
 
   ngOnInit(): void {
-    this.store.select('auth').subscribe(authState => {
+    this.storeSub = this.store.select('auth').subscribe(authState => {
       this.isLoading = authState.loading;
       this.error = authState.authError;
     });
@@ -46,6 +50,14 @@ export class AthComponent implements OnInit {
   }
 
   onCloseError() {
-    this.error = null;
+    this.store.dispatch(new AuthActions.ClearError());
+  }
+  ngOnDestroy() {
+    if (this.closeSub) {
+      this.closeSub.unsubscribe();
+    }
+    if(this.storeSub) {
+      this.storeSub.unsubscribe();
+    }
   }
 }
