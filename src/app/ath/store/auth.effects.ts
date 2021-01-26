@@ -106,7 +106,8 @@ export class AuthEffects {
     ofType(AuthActions.AUTHENTICATE_SUCCESS, AuthActions.LOGOUT),
     tap(() => {
     this.router.navigate(['/']);
-  }));
+  })
+  );
 
   constructor(private actions$: Actions,
               private http: HttpClient,
@@ -142,6 +143,7 @@ export class AuthEffects {
     tap(() => {
       this.authService.clearLogoutTimer();
       localStorage.removeItem('userData');
+      this.router.navigate(['/']);
       this.router.navigate(['/auth']);
   }));
 }

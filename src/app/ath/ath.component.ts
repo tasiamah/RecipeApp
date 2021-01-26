@@ -5,7 +5,7 @@ import {Router} from '@angular/router';
 import {Store} from '@ngrx/store';
 import * as fromApp from '../store/app.reducer';
 import * as AuthActions from '../ath/store/auth.actions';
-import {Subscription} from "rxjs";
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-ath',
