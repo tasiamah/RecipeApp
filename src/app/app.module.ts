@@ -17,6 +17,7 @@ import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 import {environment} from '../environments/environment';
 import {StoreRouterConnectingModule} from '@ngrx/router-store';
 import {RecipeEffects} from './recipes/store/recipe.effects';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import {RecipeEffects} from './recipes/store/recipe.effects';
     StoreRouterConnectingModule.forRoot(),
     CoreModule,
     AuthModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
 
   ],
   bootstrap: [AppComponent]
