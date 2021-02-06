@@ -7,16 +7,16 @@ import {AppRoutingModule} from './app-routing.module';
 import {HttpClientModule} from '@angular/common/http';
 import {ShoppingListModule} from './shopping-list/shopping-list.module';
 import {SharedModule} from './shared/shared.module';
-import {CoreModule} from "./core.module";
-import {AuthModule} from "./ath/auth.module";
-import {StoreModule} from "@ngrx/store";
-import * as fromApp from "./store/app.reducer";
-import {EffectsModule} from "@ngrx/effects";
-import {AuthEffects} from "./ath/store/auth.effects";
-import {StoreDevtoolsModule} from "@ngrx/store-devtools";
-import {environment} from "../environments/environment";
-import {StoreRouterConnectingModule} from "@ngrx/router-store";
-import {RecipeEffects} from "./recipes/store/recipe.effects";
+import {CoreModule} from './core.module';
+import {AuthModule} from './ath/auth.module';
+import {StoreModule} from '@ngrx/store';
+import * as fromApp from './store/app.reducer';
+import {EffectsModule} from '@ngrx/effects';
+import {AuthEffects} from './ath/store/auth.effects';
+import {StoreDevtoolsModule} from '@ngrx/store-devtools';
+import {environment} from '../environments/environment';
+import {StoreRouterConnectingModule} from '@ngrx/router-store';
+import {RecipeEffects} from './recipes/store/recipe.effects';
 
 @NgModule({
   declarations: [
@@ -24,7 +24,7 @@ import {RecipeEffects} from "./recipes/store/recipe.effects";
     HeaderComponent,
   ],
   imports: [
-    BrowserModule,
+    BrowserModule.withServerTransition({ appId: 'serverApp' }),
     AppRoutingModule,
     HttpClientModule,
     ShoppingListModule,
